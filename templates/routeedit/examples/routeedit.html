@@ -1,0 +1,18 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load routeedit_tags %}
+
+{% block body %}
+  En liten karta det bor i staden, han bakar tarta mest hela dagen...<br>
+  <form method="POST">
+    {% csrf_token %}
+    <input type="text" name="description" value="{{ route.description }}">
+    {% routeicon route "path" %}
+    <input type="submit" name="save" value="Save">
+  </form>
+  <br>
+  {% if route %}
+    (<a href="{% url routeedit.views.examples_edit id="new" %}">new</a>)
+  {% endif %}
+{% endblock %}

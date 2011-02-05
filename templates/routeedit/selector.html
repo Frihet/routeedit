@@ -1,0 +1,5 @@
+{% include "routeedit/dialog.html" %}
+{% load widgettag_tags %}
+{% load datatypes %}
+
+{% with STATIC_URL|aadd:"routeedit/js/editor_select.js" as url %}{% widget_addjsfile url %}{% endwith %}

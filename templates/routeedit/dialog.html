@@ -1,0 +1,14 @@
+{% include "routeedit/editor.html" %}
+{% load widgettag_tags %}
+{% load datatypes %}
+
+{% with STATIC_URL|aadd:"routeedit/js/editor_dialog.js" as url %}{% widget_addjsfile url %}{% endwith %}
+
+{% widget_adddialog "routeedit_dialog" %}
+  <form class="routeedit_dialog_input_field">
+    <label>Beskrivelse:</label>
+    <input type="text" name="routeedit_dialog_description" id="routeedit_dialog_description" class="required" />
+  </form>
+  <div id="routeedit_dialog_map_canvas"></div>
+  <div id="routeedit_dialog_chart_canvas"></div>
+{% widget_enddialog %}

@@ -1,0 +1,13 @@
+{% include "routeedit/selector.html" %}
+{% load datatypes %}
+
+<span id="{{name}}_wrapper"></span>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#{{ name }}_wrapper").makeRouteSelect({
+      'name': '{{ name }}',
+      'queryset': {{ queryset|jsonify|safe }}
+    });
+  });
+</script>

@@ -1,0 +1,40 @@
+{% include "routeedit/dialog.html" %}
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    var map = new google.maps.Map($("#{{ map_id }}_canvas")[0], {
+      zoom: 8,
+      center: new google.maps.LatLng(59.968927831023535, 10.699465698242197),
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      navigationControl: false,
+      mapTypeControl: false,
+      streetViewControl: false
+    });
+    viewerControl_{{map_id}} = ViewerControl.instanciate(map);
+    viewerControl_{{map_id}}.inputField = "#{{ map_id }}_path";
+    viewerControl_{{map_id}}.edit = function (ev) {
+      routeEditDialogOpen({
+        'open': function (control) {
+	  control.edit(viewerControl_{{map_id}});
+        },
+        'save': function (control) {
+          control.save();
+          $(control.view.inputField).val(control.view.objects[0].getPathAsString());
+        },
+        'cancel': function (control) {
+        }
+
+      });
+    };
+
+    {% if route and route.path and route.path != '[]' %}
+      var polyline = Polyline.instanciate({'map':map});
+      polyline.setPathFromString("{{route.path}}");
+      viewerControl_{{map_id}}.objects = [polyline];
+    {% endif %}
+    viewerControl_{{map_id}}.center();
+  });
+</script>
+
+<div id="{{ map_id }}_canvas" class="routeedit-smallmap"></div>
+<input type="hidden" id="{{ map_id }}_path" name="{{ map_id }}" value="{{route.path}}" />
